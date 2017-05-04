@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <!--String format implementation-->
+        <script>
+            String.prototype.format = function() {
+                var formatted = this;
+                for (var i = 0; i < arguments.length; i++) {
+                    var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+                    formatted = formatted.replace(regexp, arguments[i]);
+                }
+                return formatted;
+            };
+
+            String.prototype.replaceAll = function(search, replacement) {
+                var target = this;
+                return target.replace(new RegExp(search, 'g'), replacement);
+            };
+        </script>
+        <script type="text/javascript" src="chart.js"></script>
+    </head>
+    <body>
+        <div id="ISP pageload time" style="width: 1500px; height: 500px"></div>
+    </body>
+</html>
+
