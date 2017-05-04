@@ -9,7 +9,7 @@ var charts = {
             },
         },
         type: "Line",
-        data: [["Time", "KPN", "Ziggo", "Xs4all Internet BV"]]
+        data: [["Time", "KPN", "Ziggo"]]
     }
 };
 
@@ -59,15 +59,24 @@ function updateChart(chartName, response, chartInfo) {
 function requestData(chartName, parameters, chartInfo=null) {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8000/" + parameters,
+        url: "/mPulse/" + parameters,
         xhrFields: {
             withCredentials: false
         },
-        success: function(response){
-            updateChart(chartName, response, chartInfo);
+        success: function(response) {
+            if (chartName == "isp_pageload") {
+                // it'll fail to parse the json because series is not in quotes
+                jsonTable = response.replace('series:', '"series":');
+                repairedResponse = JSON.parse(jsonTable);
+                updateChart(chartName, repairedResponse, chartInfo);
+            } else {
+                updateChart(chartName, JSON.parse(response), chartInfo);
+            }
+            
         },
 
         error: function(responseData){
+            console.log("failure")
             if (chartName == "isp_pageload") {
                 // failed to parse the json because series is not in quotes
                 jsonTable = responseData.responseText.replace('series:', '"series":');
@@ -109,5 +118,3 @@ function drawChart() {
         }
     }
 }
-
-
