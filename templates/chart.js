@@ -93,11 +93,9 @@ function updateISP() {
         var isp = isps[i];
         var updateChart = (i == isps.length-1);
         var chartInfo = {name: isp, updateChart:updateChart};
-        requestData("isp_pageload", "by-minute?date-comparator=Last24Hours&series-format=json&isp="+isp, chartInfo);
+        requestData("isp_pageload", "by-minute?date-comparator=Last24Hours&series-format=json&timer=PageLoad&isp="+isp, chartInfo);
     }
 }
-
-updateISP();
 
 function drawChart() {
     for (var chartName in charts) {
@@ -118,3 +116,5 @@ function drawChart() {
         }
     }
 }
+
+updateISP();

@@ -2,13 +2,11 @@ import requests
 
 class mPulse:
     def __init__(self, username, password, APIkey):
-        try:
-            self.username = username
-            self.password = password
-            self.APIkey = APIkey
-            self.token = self.getToken1()
-        except:
-            print("Failed to initialize mPulse instance.")
+        self.username = username
+        self.password = password
+        self.APIkey = APIkey
+        self.token = self.getToken1()
+
 
     def getToken1(self):
         try:
@@ -17,7 +15,7 @@ class mPulse:
             js = fp.json()
             return js['token']
         except:
-            print("Failed to get token.")
+            print("Failed to get the token.")
 
     def getData(self, data):
         try:
