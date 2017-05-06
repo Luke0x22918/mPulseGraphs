@@ -1,0 +1,32 @@
+<form action="/login" method="POST">
+  <div class="container">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" id="username" required>
+
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+    <button id="id01" type="submit">Login</button>
+  </div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var button = document.getElementById('id01');
+  var login = document.getElementById("username")
+  var password = document.getElementById("password")
+
+  window.onclick = function(event) {
+      if (event.target == button) {
+        $.ajax({
+          type: "POST",
+          url: "login",
+          data: {
+            username: login.value,
+            password: password.value
+          }
+        }).done(function(response){
+          console.log(response)
+        })
+      }
+  }
+</script>
