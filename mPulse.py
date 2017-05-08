@@ -1,17 +1,19 @@
 import requests
 
 class mPulse:
-    def __init__(self, username, password, APIkey):
-        self.username = username
-        self.password = password
-        self.APIkey = APIkey
-        self.token = self.getToken1()
+    def __init__(self, *args):
+        if len(args) == 3:
+            self.token = self.getToken1(args[0], args[1])
+            self.APIkey = args[2]
+        else:
+            self.token = args[0]
+            self.APIkey = args[1]
 
 
-    def getToken1(self):
+    def getToken1(self, username, password):
         try:
             URL = "https://mpulse.soasta.com/concerto/services/rest/RepositoryService/v1/Tokens"
-            fp = requests.put(URL, data='{"userName":"%s","password":"%s"}' % (self.username, self.password), headers={"Content-type":"application/json"})
+            fp = requests.put(URL, data='{"userName":"%s","password":"%s"}' % (username, password), headers={"Content-type":"application/json"})
             js = fp.json()
             return js['token']
         except:
