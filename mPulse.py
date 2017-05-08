@@ -23,7 +23,6 @@ class mPulse:
         try:
             addformat = "&format=json" if ("?" in data) else "?format=json"
             URL = "https://mpulse.soasta.com/concerto/mpulse/api/v2/"+self.APIkey+"/"+data+addformat
-            print("Authentication:", self.token)
             fp = requests.get(URL, headers={"Authentication": self.token})
             return fp.content.decode('utf-8')
         except:

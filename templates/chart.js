@@ -74,7 +74,8 @@ function requestData(chartName, parameters, chartInfo=null) {
                 updateChart(chartName, JSON.parse(response), chartInfo);
             }
             catch(error) {
-                window.location.href = "/login"
+                // If it fails to parse the json, reload the page.
+                window.location.href = "/"
             }
         },
 
