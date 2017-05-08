@@ -7,12 +7,17 @@ var charts = {
             legend: {
                 position: "bottom"
             },
+            explorer: {}
         },
         type: "Line",
         data: [["Time", "KPN", "Ziggo"]]
     }
 };
 
+var settings = {
+    percentile: 98,
+    canUpdate: true
+};
 
 
 function getISPIndex(isp) {
@@ -39,6 +44,7 @@ function updateChart(chartName, response, chartInfo) {
             ispIndex = getISPIndex(chartInfo.name);
             for (var i = 0; i < aPoints.length; i++) {
                 var aPoint = aPoints[i];
+                var moe = parseFloat(JSON.parse(aPoint['userdata'])['value']); // not sure what to do with this
                 var x = aPoint['x'];
                 var y = aPoint['y'];
                 var date = new Date(x);
@@ -64,19 +70,15 @@ function requestData(chartName, parameters, chartInfo=null) {
             withCredentials: false
         },
         success: function(response) {
-            if (chartName == "isp_pageload") {
-                // it'll fail to parse the json because series is not in quotes
-                jsonTable = response.replace('series:', '"series":');
-                repairedResponse = JSON.parse(jsonTable);
-                updateChart(chartName, repairedResponse, chartInfo);
-            } else {
+            try {
                 updateChart(chartName, JSON.parse(response), chartInfo);
             }
-            
+            catch(error) {
+                window.location.href = "/login"
+            }
         },
 
-        error: function(responseData){
-            console.log("failure")
+        error: function(responseData) {
             if (chartName == "isp_pageload") {
                 // failed to parse the json because series is not in quotes
                 jsonTable = responseData.responseText.replace('series:', '"series":');
@@ -87,17 +89,18 @@ function requestData(chartName, parameters, chartInfo=null) {
     });
 }
 
+
 function updateISP() {
     var isps = charts['isp_pageload']['data'][0];
     for (var i = 1; i < isps.length; i++) {
         var isp = isps[i];
         var updateChart = (i == isps.length-1);
-        var chartInfo = {name: isp, updateChart:updateChart};
-        requestData("isp_pageload", "by-minute?date-comparator=Last24Hours&series-format=json&isp="+isp, chartInfo);
+        var chartInfo = {name: isp, updateChart: updateChart};
+        var query_string = "by-minute?date-comparator=Last24Hours&series-format=json&timer=PageLoad&percentile={0}&isp={1}".format(settings['percentile'], isp);
+        requestData("isp_pageload", query_string, chartInfo);
     }
 }
 
-updateISP();
 
 function drawChart() {
     for (var chartName in charts) {
@@ -118,3 +121,19 @@ function drawChart() {
         }
     }
 }
+
+var updateButton = document.getElementById("update");;
+var percentileButton = document.getElementById("percentile");
+
+window.onclick = function(event) {
+    if (!settings['canUpdate']) {
+        return
+    }
+
+    if (event.target == updateButton) {
+        settings['percentile'] = parseInt(percentileButton.value);
+        updateISP();
+    }
+}
+
+updateISP();

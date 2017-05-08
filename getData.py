@@ -1,3 +1,6 @@
+# This script is used to quickly extract data from the command line
+# Note: a credentials.json with the username and password is required to use this script
+
 import sys
 import json
 from mPulse import mPulse
@@ -10,10 +13,13 @@ def prettyPrintJSON(jsonString):
     return json.dumps(parsed, indent=4, sort_keys=True)
 
 def main():
-    username = "qg78hw"
-    password = "Welkom01"
+    file = open("credentials.json", 'r')
+    credentials = json.loads(file.read())
+    username = credentials['username']
+    password = credentials['password']
     APIkey = "C2NRZ-PALRU-BXBQR-ULJ9A-XD2AB"
     mPulseInstance = mPulse(username, password, APIkey)
+    file.close()
 
     data = sys.argv[1]
     response = mPulseInstance.getData(data)
