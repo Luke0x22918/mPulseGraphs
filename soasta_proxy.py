@@ -19,6 +19,7 @@ def check_auth(username, password):
     mPulseInstance = createmPulseInstance(username=username, password=password)
     return mPulseInstance.token != None
 
+
 def authenticate():
     """Sends a 401 response that enables basic auth"""
     return Response(
