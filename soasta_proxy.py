@@ -16,8 +16,8 @@ def createmPulseInstance(username=None, password=None, token=None):
     return mPulseInstance
 
 def check_auth(username, password):
-    mPulseInstance = createmPulseInstance(username=username, password=password)
-    return mPulseInstance.token != None
+    token = mPulse.getToken1(username, password)
+    return token != None
 
 
 def authenticate():
