@@ -23,9 +23,12 @@ def main():
 
     data = sys.argv[1]
     response = mPulseInstance.getData(data)
-    print(
-        prettyPrintJSON(response)
-    )
+    try:
+        print(
+            prettyPrintJSON(response)
+        )
+    except:
+        print(response)
 
 if __name__ == "__main__":
     main()
