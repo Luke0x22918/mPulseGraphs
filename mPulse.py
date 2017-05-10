@@ -9,8 +9,8 @@ class mPulse:
             self.token = args[0]
             self.APIkey = args[1]
 
-
-    def getToken1(self, username, password):
+    @staticmethod
+    def getToken1(username, password):
         try:
             URL = "https://mpulse.soasta.com/concerto/services/rest/RepositoryService/v1/Tokens"
             fp = requests.put(URL, data='{"userName":"%s","password":"%s"}' % (username, password), headers={"Content-type":"application/json"})

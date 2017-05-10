@@ -17,7 +17,7 @@ def main():
     credentials = json.loads(file.read())
     username = credentials['username']
     password = credentials['password']
-    APIkey = "C2NRZ-PALRU-BXBQR-ULJ9A-XD2AB"
+    APIkey = "MSCAV-P74JG-WRADB-C552Z-VWWYJ"
     mPulseInstance = mPulse(username, password, APIkey)
     file.close()
 

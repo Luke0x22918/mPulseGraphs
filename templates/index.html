@@ -2,7 +2,7 @@
     <head>
         <div class="container">
             <label><b>Percentile</b></label>
-            <input type="text" placeholder="Enter percentile" name="percentile" id="percentile">
+            <input type="text" placeholder="50" value="50" name="percentile" id="percentile">
 
             <button id="update" type="update">Update</button>
         </div>
@@ -28,7 +28,9 @@
         <script type="text/javascript" src="chart.js"></script>
     </head>
     <body>
-        <div id="ISP pageload time" style="width: 1500px; height: 500px"></div>
+        <div id="ISP pageload time in ms" style="width: 1500px; height: 500px"></div>
+        <font id="page_group_title" size="4"><b></b></font>
+        <div id="Page group info of the last 30 minutes"></div>
     </body>
 </html>
 

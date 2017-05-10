@@ -11,13 +11,13 @@ def log(message, level=1):
         print(message)
 
 def createmPulseInstance(username=None, password=None, token=None):
-    APIkey = "C2NRZ-PALRU-BXBQR-ULJ9A-XD2AB"
+    APIkey = "MSCAV-P74JG-WRADB-C552Z-VWWYJ"
     mPulseInstance = mPulse(username, password, APIkey) if username else mPulse(token, APIkey)
     return mPulseInstance
 
 def check_auth(username, password):
-    mPulseInstance = createmPulseInstance(username=username, password=password)
-    return mPulseInstance.token != None
+    token = mPulse.getToken1(username, password)
+    return token != None
 
 
 def authenticate():
