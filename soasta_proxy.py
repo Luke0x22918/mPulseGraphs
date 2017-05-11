@@ -1,7 +1,7 @@
 import os
 from functools import wraps
 from mPulse import mPulse
-from flask import Flask, render_template, request, Response, session, redirect
+from flask import Flask, render_template, request, Response, session, redirect, abort
 app = Flask(__name__)
 
 LOG_LEVEL = 2
@@ -55,6 +55,9 @@ def chart():
 
 @app.route("/mPulse/<parameter>")
 def mPulsePage(parameter):
+    if not 'token' in request.cookies:
+        abort(401, {"error:", "no token cookie was found."})
+
     token = request.cookies['token']
     mPulseInstance = createmPulseInstance(token=token)
     query_string = ("%s?%s") % (parameter, request.query_string.decode('utf-8'))
@@ -70,3 +73,7 @@ def mPulsePage(parameter):
 
 
 app.secret_key = os.urandom(24)
+
+# Enable SSL
+context = ('SSL/certificate.crt', 'SSL/key.pem')
+app.run(ssl_context=context)
