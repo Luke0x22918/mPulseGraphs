@@ -76,4 +76,4 @@ app.secret_key = os.urandom(24)
 
 # Enable SSL
 context = ('SSL/certificate.crt', 'SSL/key.pem')
-app.run(ssl_context=context)
+app.run(ssl_context=context, host='0.0.0.0')
