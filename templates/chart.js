@@ -36,7 +36,7 @@ var settings = {
 
 
 function getISPIndex(isp) {
-    isps = charts['isp_pageload']['data'][0]
+    var isps = charts['isp_pageload']['data'][0]
     for (var i = 0; i < isps.length; i++) {
         if (isps[i] == isp) {
             return i;
